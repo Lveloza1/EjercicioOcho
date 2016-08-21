@@ -5,6 +5,8 @@
  */
 package interfaz;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author USUARIO
@@ -56,18 +58,92 @@ public class principal extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tw Cen MT", 3, 14)); // NOI18N
         jLabel4.setText("Total del decuento 5%");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, -1));
+
+        txtTotal.setEditable(false);
         getContentPane().add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 170, 110, 30));
+
+        txtDescuento.setEditable(false);
         getContentPane().add(txtDescuento, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 130, 110, 30));
+
+        txtHoras.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtHorasKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtHoras, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, 110, 30));
 
         cmdBorrar.setText("Limpiar");
+        cmdBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdBorrarActionPerformed(evt);
+            }
+        });
         getContentPane().add(cmdBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 290, 100, 40));
 
         cmdCalcular.setText("Calcular pago");
-        getContentPane().add(cmdCalcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 293, 100, 40));
+        cmdCalcular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdCalcularActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cmdCalcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 290, 150, 40));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtHorasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtHorasKeyTyped
+char c=evt.getKeyChar(); 
+       
+          if(!Character.isDigit(c)) { 
+              getToolkit().beep();    
+              evt.consume();
+              
+          }
+       
+    }//GEN-LAST:event_txtHorasKeyTyped
+
+    private void cmdCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCalcularActionPerformed
+ int horas;
+ double descuento, total, total1;
+ String des, tot;
+ 
+ if(txtHoras.getText().trim().isEmpty()){
+        JOptionPane.showMessageDialog(this, "Digite el número de horas","error", JOptionPane.ERROR_MESSAGE);  
+        txtHoras.requestFocusInWindow();
+     }
+ 
+     else{ 
+
+     horas=Integer.parseInt(txtHoras.getText());
+     
+  if( horas == 0){
+      JOptionPane.showMessageDialog(this, "No hay pago","error", JOptionPane.ERROR_MESSAGE);  
+        txtHoras.requestFocusInWindow();
+        txtHoras.selectAll();
+     }     
+  total1=(horas*20000);
+  descuento=(total1*0.05);
+  total=(total1-descuento);
+  
+    des=String.valueOf(descuento);
+    txtDescuento.setText (des);
+    
+    tot=String.valueOf(total);
+    txtTotal.setText (tot);
+ }
+     
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmdCalcularActionPerformed
+
+    private void cmdBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdBorrarActionPerformed
+
+     txtHoras.setText("");
+     txtDescuento.setText("");
+     txtTotal.setText("");
+     txtHoras.requestFocusInWindow();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmdBorrarActionPerformed
 
     /**
      * @param args the command line arguments
